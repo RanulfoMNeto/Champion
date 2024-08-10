@@ -12,10 +12,10 @@ RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy the application code and requirements.txt into the container
-COPY . /app
+COPY . /usr/src/app
 
 # Install the required Python packages
 RUN pip install -r requirements.txt
