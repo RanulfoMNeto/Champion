@@ -3,21 +3,22 @@ from parser import Champion, extract_data
 
 if __name__ == '__main__':
 
-    # Path to the HTML file
+    # Define the path to the HTML file containing the champion data
     file_path = 'index.html'
     
     # Read the content of the HTML file
     content = read_file(file_path)
 
-    # Extract data from HTML content
+    # Extract champion data from the HTML content
     name, role, tier, win_rate, pick_rate, ban_rate, matches = extract_data(content)
     
-    # Create a Champion instance from the extracted data
+    # Create a Champion object using the extracted data
     champion = Champion(name, role, tier, win_rate, pick_rate, ban_rate, matches)
     
-    # Print the champion details
+    # Print the Champion object to the console
     print(champion)
 
+    # Prepare the data to be sent to the server
     data = {
         'name': champion.name,
         'role': champion.role,
@@ -28,4 +29,5 @@ if __name__ == '__main__':
         'matches': champion.matches
     }
 
-    send_to_server(data)
+    # Send the data to the server using the send_to_server function
+    # send_to_server(data)
