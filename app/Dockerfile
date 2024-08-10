@@ -8,17 +8,17 @@ RUN apt-get update && \
 # Create a virtual environment
 RUN python3 -m venv /opt/venv
 
-# Install BeautifulSoup4 in the virtual environment
-RUN /opt/venv/bin/pip install beautifulsoup4
-
 # Set the virtual environment path
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the application code into the container
+# Copy the application code and requirements.txt into the container
 COPY . /app
+
+# Install the required Python packages
+RUN pip install -r requirements.txt
 
 # Make the script executable
 RUN chmod +x script.sh
