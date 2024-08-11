@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Define variables
-URL="https://u.gg/lol/champions/mordekaiser/build"
-OUTPUT_FILE="index.html"
+URL="https://u.gg/lol/champions"
+OUTPUT_FILE="champions.html"
 PYTHON_PATH="/opt/venv/bin/python"
 SCRIPT="main.py"
 

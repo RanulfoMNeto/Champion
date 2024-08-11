@@ -1,4 +1,6 @@
 from bs4 import BeautifulSoup
+from utils import read_file, fetch_content
+from urllib.parse import urljoin
 
 class Champion:
     def __init__(self, name, role, tier, win_rate, pick_rate, ban_rate, matches):
@@ -33,7 +35,35 @@ class Champion:
                 f"win_rate={self.win_rate!r}, pick_rate={self.pick_rate!r}, "
                 f"ban_rate={self.ban_rate!r}, matches={self.matches!r})")
 
-def extract_data(content):
+def extract_champions(file_path, base_url):
+
+    # Read the content of the HTML file
+    content = read_file(file_path)
+
+    champions = []
+
+    # Parse the HTML content using BeautifulSoup
+    soup = BeautifulSoup(content, 'html.parser')
+    
+    # Extract all URLs for champions
+    urls = [urljoin(base_url, a['href']) for a in soup.find_all('a', class_='champion-link')]
+
+    for url in urls:
+        # Fetch the content of the champion page
+        content = fetch_content(url)
+
+        if content:  # Proceed only if content was successfully fetched
+            # Extract champion data from the HTML content
+            name, role, tier, win_rate, pick_rate, ban_rate, matches = extract_champion(content)
+            
+            # Create a Champion object using the extracted data
+            champion = Champion(name, role, tier, win_rate, pick_rate, ban_rate, matches)
+
+            champions.append(champion)
+
+    return champions
+
+def extract_champion(content):
     """
     Extract champion data from HTML content.
 
