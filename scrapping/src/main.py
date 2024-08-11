@@ -29,7 +29,7 @@ if __name__ == '__main__':
     scheduler = sched.scheduler(time.time, time.sleep)
 
     # Define the interval in seconds at which you want to run the task
-    interval = 600  # 10 min
+    interval = 60
 
     # Schedule the first call to the task
     scheduler.enter(0, 1, periodically, (scheduler, interval, file_path, base_url, server_url))

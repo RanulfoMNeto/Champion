@@ -50,8 +50,8 @@ def extract_champions(file_path, base_url):
 
     i = 0
     for url in urls:
-        if i == 5:
-            break
+        # if i == 20:
+        #     break
         # Fetch the content of the champion page
         content = fetch_content(url)
 

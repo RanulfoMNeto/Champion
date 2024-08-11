@@ -5,50 +5,252 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Champions</title>
     <style>
+        /* Definindo variáveis de cores */
+        :root {
+            --text-color: #FFFFFF;
+            --background-color: #222222;
+            --box-color: #282828;
+            --border-radius: 15px;
+
+            --text-size: 18px;
+            --label-size: 16px;
+            --title-size: 28px;
+            --won-color: #4C705C;
+            --lost-color: #934747;
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400; /* Peso regular */
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+
+        }
+        .container {
+            width: 80%;
+            max-width: 1200px;
+        }
+        .header {
+            padding-top: 30px;
+            font-size: var(--title-size);
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Alinha os itens verticalmente no centro */
+            gap: 15px; /* Espaçamento entre o SVG e o título */
+        }
+        /* Estilo para o SVG */
+        .header svg {
+            display: block; /* Garante que o SVG não tenha margem ou espaçamento extra */
+        }
+        .legend {
+            /*background-color: var(--box-color);*/
+            padding: 15px;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-around;
+            font-weight: bold;
+            margin-bottom: 10px; /* Espaçamento entre a legenda e a tabela */
+        }
+        .legend div {
+            flex: 1;
+            text-align: center;
         }
         .champion {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px 0;
+            background-color: var(--box-color);
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-around;
+            padding: 30px;
         }
-        .champion h2 {
-            margin: 0;
+        .champion div {
+            flex: 1;
+            text-align: center;
         }
+        #champions-container {
+            width: 100%;
+        }
+
+        .search {
+            display: flex;
+            flex-wrap: wrap; /* Permite que os itens se movam para a linha seguinte se não houver espaço suficiente */
+            gap: 50px; /* Espaçamento entre os itens */
+            justify-content: center; /* Centraliza os itens horizontalmente */
+            margin: 30px 10px 50px 10px;
+        }
+
+        .search .input {
+            max-width: 300px; /* Ajusta a largura máxima dos itens */
+        }
+
+        .search label {
+            margin-left: 10px;
+            font-weight: bold;
+            font-size: var(--label-size);
+            margin-bottom: 5px; /* Ajuste o espaço entre o label e o input */
+            display: block;
+            text-align: left; /* Alinha o texto do label à esquerda */
+            width: 100%; /* Faz o label se ajustar à largura do input */
+            max-width: 300px; /* Limita a largura máxima do label */
+        }
+
+        .search input,
+        .search select {
+            font-size: var(--text-size);
+            padding: 15px;
+            border: none;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 300px;
+            background-color: var(--box-color);
+            color: var(--text-color);
+            display: block;
+        }
+
+        .search select {
+            padding: 15px;
+            width: 100%;
+        }
+
+        .search .button-container {
+            align-self: flex-end; /* Posiciona o botão na parte inferior do container */
+            margin-top: auto; /* Empurra o botão para baixo */
+            max-width: 300px; /* Ajusta a largura máxima do botão */
+        }
+
+        .search button {
+            font-size: var(--text-size); /* Usa a mesma fonte do input e select */
+            padding: 15px 30px; /* Usa o mesmo padding do input e select */
+            border: none; /* Remove a borda padrão */
+            border-radius: var(--border-radius); /* Usa o mesmo raio de borda do input e select */
+            width: 100%; /* Faz o botão se ajustar à largura do container */
+            background-color: var(--box-color); /* Usa a mesma cor de fundo do input e select */
+            color: var(--text-color); /* Usa a mesma cor do texto do input e select */
+            display: block; /* Faz o botão se comportar como um bloco */
+            cursor: pointer; /* Adiciona um cursor de ponteiro para indicar que é clicável */
+            text-align: center; /* Centraliza o texto no botão */
+        }
+
+        .search button:hover {
+            background-color: var(--text-color); /* Cor de fundo ao passar o mouse (opcional) */
+            color: var(--box-color);
+        }
+
+        .champion-win-rate {
+            color: var(--won-color);
+        }
+
+        .champion-ban-rate {
+            color: var(--lost-color);
+        }
+
+        .legend {
+            background-color: transparent;
+        }
+
     </style>
 </head>
 <body>
-    <h1>Champions</h1>
-    <div id="champions-container"></div>
+    <div class="container">
+        <header class="header">
+            <svg width="50" height="50" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M11.5385 2C11.5385 1.17157 12.21 0.5 13.0385 0.5H17.9615C18.79 0.5 19.4615 1.17157 19.4615 2V29.5H11.5385V2Z"
+                    fill="white" stroke="white" />
+                <path
+                    d="M22.5 16.3478C22.5 15.5194 23.1716 14.8478 24 14.8478H28.9231C29.7515 14.8478 30.4231 15.5194 30.4231 16.3478V29.5H22.5V16.3478Z"
+                    fill="white" stroke="white" />
+                <path
+                    d="M0.5 10C0.5 9.17157 1.17157 8.5 2 8.5H6.92308C7.7515 8.5 8.42308 9.17157 8.42308 10V29.6739H0.5V10Z"
+                    fill="white" stroke="white" />
+            </svg>
+            <h1>Champions</h1>
+        </header>
+        <form action="" method="post" id="alert-form"></form>
+            <div class="search">
+            
+                <div class="input">
+                    <label for="champion-search">Champion</label>
+                    <input type="text" class="champion-search" id="champion-search" placeholder="Search">
+                </div>
+                <div class="input">
+                    <label for="email">Email</label>
+                    <input type="email" class="email" id="email" placeholder="Email">
+                </div>
+                <div class="input">
+                    <label for="tier">Tier</label>
+                    <select name="tier" id="tier">
+                        <option value="S+">S+</option>
+                        <option value="S">S</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
+                <div class="button-container">
+                    <button type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+        <div class="legend">
+            <div>Name</div>
+            <div>Role</div>
+            <div>Tier</div>
+            <div>Win Rate</div>
+            <div>Pick Rate</div>
+            <div>Ban Rate</div>
+            <div>Matches</div>
+        </div>
+        <div id="champions-container"></div>
+    </div>
 
     <script>
+        let championsData = [];
+
         async function fetchChampions() {
             try {
-                const response = await fetch('http://localhost:3000/api/champions', {method:"GET"});
-                const data = await response.json();
-
-                const container = document.getElementById('champions-container');
-                container.innerHTML = '';
-
-                data.forEach(champion => {
-                    const championDiv = document.createElement('div');
-                    championDiv.className = 'champion';
-                    championDiv.innerHTML = `
-                        <h2>${champion.name}</h2>
-                        <p><strong>Role:</strong> ${champion.role}</p>
-                        <p><strong>Tier:</strong> ${champion.tier}</p>
-                        <p><strong>Win Rate:</strong> ${champion.win_rate}</p>
-                        <p><strong>Pick Rate:</strong> ${champion.pick_rate}</p>
-                        <p><strong>Ban Rate:</strong> ${champion.ban_rate}</p>
-                        <p><strong>Matches:</strong> ${champion.matches}</p>
-                    `;
-                    container.appendChild(championDiv);
-                });
+                const response = await fetch('http://localhost:3000/api/champions', { method: "GET" });
+                championsData = await response.json();
+                displayChampions(championsData);
             } catch (error) {
                 console.error('Error fetching champions:', error);
             }
         }
+
+        function displayChampions(data) {
+            const container = document.getElementById('champions-container');
+            container.innerHTML = '';
+
+            data.forEach(champion => {
+                const championDiv = document.createElement('div');
+                championDiv.className = 'champion';
+                championDiv.innerHTML = `
+                    <div class="champion-name">${champion.name}</div>
+                    <div class="champion-role">${champion.role}</div>
+                    <div class="champion-tier">${champion.tier}</div>
+                    <div class="champion-win-rate">${champion.win_rate}</div>
+                    <div class="champion-pick-rate">${champion.pick_rate}</div>
+                    <div class="champion-ban-rate">${champion.ban_rate}</div>
+                    <div class="champion-matches">${champion.matches}</div>
+                `;
+                container.appendChild(championDiv);
+            });
+        }
+
+        function filterChampions() {
+            const searchValue = document.getElementById('champion-search').value.toLowerCase();
+            const filteredData = championsData.filter(champion =>
+                champion.name.toLowerCase().includes(searchValue)
+            );
+            displayChampions(filteredData);
+        }
+
+        document.getElementById('champion-search').addEventListener('input', filterChampions);
 
         // Call the function to fetch and display champions data
         fetchChampions();
