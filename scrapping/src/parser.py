@@ -48,7 +48,10 @@ def extract_champions(file_path, base_url):
     # Extract all URLs for champions
     urls = [urljoin(base_url, a['href']) for a in soup.find_all('a', class_='champion-link')]
 
+    i = 0
     for url in urls:
+        if i == 5:
+            break
         # Fetch the content of the champion page
         content = fetch_content(url)
 
@@ -60,6 +63,7 @@ def extract_champions(file_path, base_url):
             champion = Champion(name, role, tier, win_rate, pick_rate, ban_rate, matches)
 
             champions.append(champion)
+        i += 1
 
     return champions
 
