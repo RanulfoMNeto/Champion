@@ -26,10 +26,27 @@ app.get('/api/champions', (req, res) => {
     res.json(champions);
 });
 
+// Route to get a specific champion by code
+app.get('/api/champions/:code', (req, res) => {
+    const code = req.params.code;
+    const champion = champions.find(c => c.code === code);
+    if (champion) {
+        res.json(champion);
+    } else {
+        res.status(404).json({ message: 'Champion not found' });
+    }
+});
+
+
 // Serve the index.html file at the /champions route
 app.get('/champions', (req, res) => {
-    res.sendFile(path.join(__dirname, 'front-end', 'index.html'));
+    res.sendFile(path.join(__dirname, 'front-end', 'champions.html'));
 });
+
+app.get('/chart', (req, res) => {
+    res.sendFile(path.join(__dirname, 'front-end', 'chart.html'));
+});
+
 
 // Catch-all route to serve static files
 app.get('*', (req, res) => {

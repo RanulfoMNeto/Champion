@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Plot</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        /* Defining color variables */
+        :root {
+            --text-color: #FFFFFF;
+            --background-color: #222222;
+            --box-color: #282828;
+            --border-radius: 15px;
+            --font-family: 'Inter', sans-serif;
+
+            --text-size: 18px;
+            --label-size: 16px;
+            --title-size: 28px;
+            --won-color: #4C705C;
+            --lost-color: #934747;
+        }
+        .header {
+            padding-top: 30px;
+            font-size: var(--title-size);
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        .header svg {
+            display: block;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-weight: 400;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+        .chart {
+            background-color: var(--background-color) !important;
+            border-radius: var(--border-radius);
+            padding: 10px;
+            display: none; /* Initially hides all charts */
+        }
+        .chart.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px; /* Adjust height as needed */
+        }
+
+        .menu {
+            display: flex;
+            flex-wrap: wrap; /* Permite que os itens se movam para a linha seguinte se não houver espaço suficiente */
+            justify-content: center; /* Centraliza os itens horizontalmente */
+            margin: 30px auto; /* Margem superior e inferior ajustadas, centraliza horizontalmente com auto */
+            max-width: 200px; /* Ajusta a largura máxima do menu */
+            width: 100%; /* Garante que o menu use a largura total disponível */
+            box-sizing: border-box; /* Inclui padding e border na largura total */
+        }
+
+        .menu label {
+            margin-left: 10px;
+            /* font-weight: bold; */
+            font-size: var(--label-size);
+            margin-bottom: 5px; /* Ajuste o espaço entre o label e o input */
+            display: block;
+            text-align: left; /* Alinha o texto do label à esquerda */
+            width: 100%; /* Faz o label se ajustar à largura do input */
+            max-width: 200px; /* Limita a largura máxima do label */
+        }
+
+        .menu select {
+            font-size: var(--text-size);
+            padding: 15px;
+            border: none;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 200px;
+            background-color: var(--box-color);
+            color: var(--text-color);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <svg width="50" height="50" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.5385 2C11.5385 1.17157 12.21 0.5 13.0385 0.5H17.9615C18.79 0.5 19.4615 1.17157 19.4615 2V29.5H11.5385V2Z" fill="white" stroke="white" />
+            <path d="M22.5 16.3478C22.5 15.5194 23.1716 14.8478 24 14.8478H28.9231C29.7515 14.8478 30.4231 15.5194 30.4231 16.3478V29.5H22.5V16.3478Z" fill="white" stroke="white" />
+            <path d="M0.5 10C0.5 9.17157 1.17157 8.5 2 8.5H6.92308C7.7515 8.5 8.42308 9.17157 8.42308 10V29.6739H0.5V10Z" fill="white" stroke="white" />
+        </svg>
+        <h1>Champions</h1>
+    </header>
+    <div class="menu">
+        <label for="chart-select">Chart</label>
+        <select id="chart-select">
+            <option value="">Select</option>
+            <option value="matches-plot">Matches</option>
+            <option value="win-rate-plot">Win Rate</option>
+            <option value="pick-rate-plot">Pick Rate</option>
+            <option value="ban-rate-plot">Ban Rate</option>
+        </select>
+    </div>
+    <div id="matches-plot" class="chart"></div>
+    <div id="win-rate-plot" class="chart"></div>
+    <div id="pick-rate-plot" class="chart"></div>
+    <div id="ban-rate-plot" class="chart"></div>
+    <script src="chart.js"></script>
+</body>
+</html>

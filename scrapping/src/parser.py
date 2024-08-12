@@ -84,11 +84,7 @@ def extract_champions(file_path, base_url):
     urls = [urljoin(base_url, a['href']) for a in soup.find_all('a', class_=CHAMPION_LINK_CLASS)]
     
     champions = []
-    i = 0
     for url in urls:
-        if i > 5:
-            break
-        i += 1
         try:
             # Extract champion data from the URL
             champion_data = extract_champion(url)
