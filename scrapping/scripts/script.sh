@@ -9,5 +9,5 @@ SCRIPT="main.py"
 # Use curl to download the HTML page
 curl -o "$OUTPUT_FILE" "$URL"
 
-# Run the parser script using the virtual environment's Python
+# # Run the parser script using the virtual environment's Python
 "$PYTHON_PATH" "$SCRIPT"

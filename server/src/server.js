@@ -10,7 +10,8 @@ let champions = [];
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'src')));
+// Serve static files from the 'front-end' directory
+app.use(express.static(path.join(__dirname, 'front-end')));
 
 // Route to handle incoming champion data
 app.post('/api/champions', (req, res) => {
@@ -27,7 +28,12 @@ app.get('/api/champions', (req, res) => {
 
 // Serve the index.html file at the /champions route
 app.get('/champions', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'front-end', 'index.html'));
+});
+
+// Catch-all route to serve static files
+app.get('*', (req, res) => {
+    res.status(404).send('Not Found');
 });
 
 // Start the server

@@ -12,10 +12,10 @@ RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Set the working directory
-WORKDIR /app/scrapping/src
+WORKDIR /app/scrapping
 
 # Copy the application code and requirements.txt into the container
-COPY src/ /app/scrapping/src/
+COPY /src /app/scrapping/
 COPY requirements.txt /app/scrapping/
 
 # Install the required Python packages

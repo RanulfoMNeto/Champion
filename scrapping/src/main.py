@@ -23,13 +23,13 @@ if __name__ == '__main__':
     base_url = 'https://u.gg/lol/champions'
     
     # Define the URL of the server endpoint where data will be sent
-    server_url = 'http://localhost:3000/api/champions'
+    server_url = 'http://node:3000/api/champions'
 
     # Create a scheduler instance
     scheduler = sched.scheduler(time.time, time.sleep)
 
     # Define the interval in seconds at which you want to run the task
-    interval = 60
+    interval = 1
 
     # Schedule the first call to the task
     scheduler.enter(0, 1, periodically, (scheduler, interval, file_path, base_url, server_url))

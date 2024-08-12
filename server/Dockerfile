@@ -12,8 +12,8 @@ COPY package.json /app/server/
 RUN npm install
 
 # Copy the start script file and make it executable
-COPY scripts/start.sh /app/server/scripts/
-RUN chmod +x /app/server/scripts/start.sh
+COPY scripts/script.sh /app/server/scripts/
+RUN chmod +x /app/server/scripts/script.sh
 
-# Define the entry point
+# # Define the entry point
 ENTRYPOINT ["/app/server/scripts/script.sh"]
