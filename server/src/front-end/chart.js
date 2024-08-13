@@ -127,15 +127,15 @@ const renderBoxPlots = (champions) => {
                 color: getCssVariable('--text-color') // Cor da fonte da legenda
             }
         },
-        plot_bgcolor: getCssVariable('--background-color'),
+        plot_bgcolor: getCssVariable('--box-color'),
         paper_bgcolor: getCssVariable('--background-color')
     });
 
     // Render the plots
-    Plotly.newPlot('matches-plot', matchesData, layout('Box Plot of Champion Matches by Role', 'Matches'));
-    Plotly.newPlot('win-rate-plot', winRateData, layout('Box Plot of Champion Win Rates by Role', 'Win Rate (%)'));
-    Plotly.newPlot('pick-rate-plot', pickRateData, layout('Box Plot of Champion Pick Rates by Role', 'Pick Rate (%)'));
-    Plotly.newPlot('ban-rate-plot', banRateData, layout('Box Plot of Champion Ban Rates by Role', 'Ban Rate (%)'));
+    Plotly.newPlot('matches-plot', matchesData, layout('Box Plot', 'Matches'));
+    Plotly.newPlot('win-rate-plot', winRateData, layout('Box Plot', 'Win Rate (%)'));
+    Plotly.newPlot('pick-rate-plot', pickRateData, layout('Box Plot', 'Pick Rate (%)'));
+    Plotly.newPlot('ban-rate-plot', banRateData, layout('Box Plot', 'Ban Rate (%)'));
 };
 
 // Main function to fetch champion data from the API and display the plots

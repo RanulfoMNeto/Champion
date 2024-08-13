@@ -18,6 +18,7 @@
             --title-size: 28px;
             --won-color: #4C705C;
             --lost-color: #934747;
+            --hover-background-color: rgb(229, 229, 229);
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -67,6 +68,12 @@
             display: flex;
             justify-content: space-around;
             padding: 30px;
+            cursor: pointer; /* Adiciona um cursor de ponteiro para indicar que é clicável */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .champion:hover {
+            background-color: var(--hover-background-color);
+            color: var(--box-color);
         }
         .champion div {
             flex: 1;
@@ -134,10 +141,11 @@
             display: block; /* Faz o botão se comportar como um bloco */
             cursor: pointer; /* Adiciona um cursor de ponteiro para indicar que é clicável */
             text-align: center; /* Centraliza o texto no botão */
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .search button:hover {
-            background-color: var(--text-color); /* Cor de fundo ao passar o mouse (opcional) */
+            background-color: var(--hover-background-color);
             color: var(--box-color);
         }
 
@@ -171,9 +179,8 @@
             </svg>
             <h1>Champions</h1>
         </header>
-        <form action="" method="post" id="alert-form"></form>
+        <form id="alert-form">
             <div class="search">
-            
                 <div class="input">
                     <label for="champion-search">Champion</label>
                     <input type="text" class="champion-search" id="champion-search" placeholder="Search">
