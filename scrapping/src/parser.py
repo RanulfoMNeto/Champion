@@ -39,7 +39,7 @@ class Champion:
                 f"ban_rate={self.ban_rate!r}, matches={self.matches!r})")
 
 # Constants for CSS class names
-CHAMPION_LINK_CLASS = 'champion-link'
+CHAMPION_LINK_CLASS = 'group w-full mx-auto'
 CHAMPION_NAME_CLASS = 'champion-name'
 ROLE_VALUE_CLASS = 'role-value'
 CHAMPION_TIER_CLASS = 'champion-tier'
@@ -81,7 +81,7 @@ def extract_champions(file_path, base_url):
     soup = BeautifulSoup(content, 'html.parser')
 
     # Extract all URLs for champions
-    urls = [urljoin(base_url, a['href']) for a in soup.find_all('a', class_=CHAMPION_LINK_CLASS)]
+    urls = [urljoin(base_url, a['href']) for a in soup.find_all('a', class_=CHAMPION_LINK_CLASS) if a.get("href")]
     
     champions = []
     for url in urls:
@@ -109,32 +109,29 @@ def extract_champion(url):
     content = fetch_content(url)
     soup = BeautifulSoup(content, 'html.parser')
     # Extract the champion's name
-    name = soup.find('span', class_=CHAMPION_NAME_CLASS).get_text(strip=True)
+    name_element = soup.find('h1')
+    name = name_element.find('span').get_text(strip=True) if name_element else "Unknown"
 
     # Extract the champion's code
     code = extract_champion_code(url)
 
-    # Extract the champion's name
-    name = soup.find('span', class_='champion-name').get_text(strip=True)
-    
-    # Extract the champion's role from a nested div structure
+    # Extract the champion's role
     role_div = soup.find('div', class_='role-value')
-    role = role_div.find('div', style=True).get_text(strip=True)
-    
+    role = role_div.get_text(strip=True) if role_div else "Unknown"
+
     # Extract the champion's tier
-    tier = soup.find('div', class_='champion-tier').find('div', class_='tier').get_text(strip=True)
-    
-    # Extract the champion's win rate
-    win_rate = soup.find('div', class_='win-rate').find('div', class_='value').get_text(strip=True)
-    
-    # Extract the champion's pick rate
-    pick_rate = soup.find('div', class_='pick-rate').find('div', class_='value').get_text(strip=True)
-    
-    # Extract the champion's ban rate
-    ban_rate = soup.find('div', class_='ban-rate').find('div', class_='value').get_text(strip=True)
-    
-    # Extract the number of matches played with the champion
-    matches = soup.find('div', class_='matches').find('div', class_='value').get_text(strip=True)
+    tier_element = soup.find('div', class_='font-extrabold')
+    tier = tier_element.get_text(strip=True) if tier_element else "N/A"
+
+    # Extract champion statistics
+    stat_blocks = soup.find_all('div', class_='font-extrabold')
+    if len(stat_blocks) >= 6:
+        win_rate = stat_blocks[1].get_text(strip=True)
+        pick_rate = stat_blocks[3].get_text(strip=True)
+        ban_rate = stat_blocks[4].get_text(strip=True)
+        matches = stat_blocks[5].get_text(strip=True)
+    else:
+        win_rate, pick_rate, ban_rate, matches = ["N/A"] * 4
 
     # Return the extracted data as a tuple
     return name, code, role, tier, win_rate, pick_rate, ban_rate, matches
